@@ -1,4 +1,5 @@
 <?php 
+
 namespace pages; 
 
 $array = [
@@ -12,4 +13,3 @@ foreach ($array as $film){
 }
 
 ?>
-
