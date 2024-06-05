@@ -1,0 +1,57 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 98vh;
+}
+
+footer {
+  margin-top: auto;
+  background-color: red;
+  color: white;
+  padding: 10px;
+}
+
+header {
+	background-color: lightGray;
+}
+
+.headerImage {
+	height: 200px;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+}
+
+/*navbar*/
+/* Add a black background color to the top navigation */
+.topnav {
+  	display: flex;
+  	flex-wrap: wrap;
+  	flex-direction: row;
+  	background-color: #333;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+	padding: 10px;
+  	color: #f2f2f2;
+  	text-decoration: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+	background-color: #ddd;
+  	color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  	background-color: #04AA6D;
+  	color: white;
+}
+
+.flexRow {
+  	display: flex;
+  	flex-wrap: wrap;
+  	flex-direction: row;
+}

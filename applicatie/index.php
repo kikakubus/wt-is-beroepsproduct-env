@@ -1,19 +1,61 @@
+<?php 
+require_once 'Database/conn.php';
+
+if (!isset($_GET['page'])) {
+    $_GET['page'] = "home";
+}
+
+session_start();
+
+// Define the default active page
+$activePage = isset($_GET['page']) ? $_GET['page'] : 'home';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Testing</title>
+    <link rel="stylesheet" type="text/css" href="css/css.css">
 </head>
+
 <body>
-    <h1>It Works!</h1>
-    <?php echo('Hallo WT\'er, de webserver is online en PHP werkt.'); ?>
-    <br>
-    <br>
-    Alle technische informatie over je webserver vind je hier: <a href="phpinfo.php">http://<?=$_SERVER['HTTP_HOST']?>/phpinfo.php</a>
-    <br>
-    <br>
-    Een voorbeeld van een pagina die gegevens uit de database haalt vind je hier: <a href="componist-aantalstukken.php">http://<?=$_SERVER['HTTP_HOST']?>/componist-aantalstukken.php</a>
+
+<header>
+	<a href="index.php?page=home">
+		<img class="headerImage" src="content/img/OnlyTheBest.png">
+	</a>
+</header>
+
+<!-- Navbar -->
+<nav class="topnav">
+    <a <?php if ($_GET['page'] == 'home') echo 'class="active"'; ?> href="index.php?page=home">Home</a>
+    <a <?php if ($_GET['page'] == 'about') echo 'class="active"'; ?> href="index.php?page=about">About</a>
+</nav>
+
+<!-- Content -->
+<main>
+    <?php
+    // Include the active page content dynamically
+    switch ($activePage) {
+        case 'home':
+            include('pages/home.php');
+            break;
+        case 'about':
+            include('pages/about.php');
+            break;
+        case 'films':
+            include('pages/films.php');
+            break;
+        default:
+            include('pages/home.php');
+            break;
+    }
+    ?>
+</main>
+
+<footer class="footer">Footer</footer>
+
 </body>
 </html>
