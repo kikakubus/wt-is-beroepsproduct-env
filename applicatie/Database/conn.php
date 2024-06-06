@@ -1,32 +1,26 @@
 <?php
-namespace Database;
 
-use PDO;
-use PDOException;
-//namespace Database;
+// defined in 'variables.env'
+$db_host = 'database_server'; // de database server
+$db_name = 'muziekschool';                    // naam van database
 
-// Database connection parameters
-$host = '127.0.0.1';  // Database host, usually '127.0.0.1' or 'localhost'
-$db   = 'test';  // The name of the database
-$user = 'root';  // The username for the database
-$pass = '';  // The password for the database user
-$charset = 'utf8mb4';  // The character set
+// defined in sql-script 'movies.sql'
+$db_user    = 'sa';                 // db user
+$db_password = 'abc123!@#';  // wachtwoord db user
 
-// DSN (Data Source Name) for PDO
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+// Het 'ssl certificate' wordt altijd geaccepteerd (niet overnemen op productie, verder dan altijd "TrustServerCertificate=1"!!!)
+$connection = new PDO('sqlsrv:Server=' . $db_host . ';Database=' . $db_name . ';ConnectionPooling=0;TrustServerCertificate=1', $db_user, $db_password);
 
-//PDO options
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Throw exceptions on errors
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Fetch associative arrays by default
-    PDO::ATTR_EMULATE_PREPARES   => false, // Disable emulation of prepared statements for increased security
-];
+// Bewaar het wachtwoord niet langer onnodig in het geheugen van PHP.
+unset($db_password);
 
-try {
-    // Create a new PDO instance
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (PDOException $e) {
-    // Handle any connection errors
-    echo "Database connection failed: " . $e->getMessage();
+// Zorg ervoor dat eventuele fouttoestanden ook echt als fouten (exceptions) gesignaleerd worden door PHP.
+$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Functie om in andere files toegang te krijgen tot de verbinding.
+function makeConnection() {
+    global $connection;
+    return $connection;
 }
+
 ?>

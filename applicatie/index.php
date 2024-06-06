@@ -1,5 +1,6 @@
 <?php 
 require_once 'Database/conn.php';
+$conn = makeConnection();
 
 if (!isset($_GET['page'])) {
     $_GET['page'] = "home";
