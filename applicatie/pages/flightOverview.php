@@ -29,7 +29,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     <form method="POST" action="" class="search-form">
         <input type="text" name="search" placeholder="Search flights..." value="<?= htmlspecialchars($search_term); ?>">
-        <button type="submit">Search</button>
+        <button class="submit-button" type="submit">Search</button>
     </form>
     
     <table>

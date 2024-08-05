@@ -36,49 +36,51 @@ else
 }
 ?>
 <div class="mms-center">
-    <h2>Flight Details</h2>
-    <?php if ($flight): ?>
+	<div class="form-container">
+    	<h2>Flight Details</h2>
+    	<?php if ($flight): ?>
         <p><strong>Flight Number:</strong> <?=$flight['vluchtnummer']?></p>
         <p><strong>Destination:</strong> <?=$flight['bestemming']?> - <?=$luchthaven['naam']?></p>
         <p><strong>Gatecode:</strong> <?=$flight['gatecode']?></p>
         <p><strong>Departure Time:</strong> <?=$flight['vertrektijd']?></p>
+    </div>
         
-        <h3>Passengers List</h3>
-        <form method="POST" action="" class="search-form">
-        	<input type="text" name="search" placeholder="Search passengers" value="<?=$search_term?>">
-        	<button type="submit">Search</button>
-    	</form>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Passenger ID</th>
-                    <th>Name</th>
-                    <th>Sex</th>
-                    <th>Seat Number</th>
-                    <th><a href="index.php?page=addPassenger&flight=<?=$flight['vluchtnummer']?>"><?=ADDBUTTON?></a></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($passengers): ?>
-                    <?php foreach ($passengers as $passenger): ?>
-                        <tr>
-                            <td><?=$passenger['passagiernummer']?></td>
-                            <td><?=$passenger['naam']?></td>
-                            <td><?=$passenger['geslacht']?></td>
-                            <td><?=$passenger['stoel']?></td>
-                            <td>
-                            	<a href="index.php?page=addPassenger&flight=<?=$flight['vluchtnummer']?>&id=<?=$passenger['passagiernummer']?>"><?=EDITBUTTON?></a>
-                            	<a><?=DELETEBUTTON?></a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
+    <h3>Passengers List</h3>
+    <form method="POST" action="" class="search-form">
+    	<input type="text" name="search" placeholder="Search passengers" value="<?=$search_term?>">
+    	<button class="submit-button" type="submit">Search</button>
+	</form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Passenger ID</th>
+                <th>Name</th>
+                <th>Sex</th>
+                <th>Seat Number</th>
+                <th><a href="index.php?page=addPassenger&flight=<?=$flight['vluchtnummer']?>"><?=ADDBUTTON?></a></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($passengers): ?>
+                <?php foreach ($passengers as $passenger): ?>
                     <tr>
-                        <td colspan="4">No passengers found.</td>
+                        <td><?=$passenger['passagiernummer']?></td>
+                        <td><?=$passenger['naam']?></td>
+                        <td><?=$passenger['geslacht']?></td>
+                        <td><?=$passenger['stoel']?></td>
+                        <td>
+                        	<a href="index.php?page=addPassenger&flight=<?=$flight['vluchtnummer']?>&id=<?=$passenger['passagiernummer']?>"><?=EDITBUTTON?></a>
+                        	<a type="submit" href="logic/deletePassenger.php?&number=<?=$passenger['passagiernummer']?>"><?=DELETEBUTTON?></a>
+                        </td>
                     </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="4">No passengers found.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
     <?php else: ?>
         <p>Flight not found.</p>
     <?php endif; ?>

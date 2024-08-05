@@ -11,7 +11,9 @@ if (!isset($_GET['page'])) {
 
 // Define the default active page
 $activePage = isset($_GET['page']) ? $_GET['page'] : 'home';
-$currentUrl = $_SERVER['REQUEST_URI']."?page=".$activePage;
+$currentUrl = $_SERVER['REQUEST_URI'];
+
+$_SESSION['url'] = $currentUrl;
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +32,7 @@ $currentUrl = $_SERVER['REQUEST_URI']."?page=".$activePage;
 <nav class="topnav mms-round">
     <a <?php if ($_GET['page'] == 'home') echo 'class="active"'; ?> href="index.php?page=home">Home</a>
     <a <?php if ($_GET['page'] == 'flights') echo 'class="active"'; ?> href="index.php?page=flights">Flights</a>
+    <a <?php if ($_GET['page'] == 'checkin') echo 'class="active"'; ?> href="index.php?page=checkin">Check-in</a>
     <a <?php if ($_GET['page'] == 'login') echo 'class="active "'; ?> href="index.php?page=login">Login</a>
 </nav>
 
@@ -51,6 +54,9 @@ $currentUrl = $_SERVER['REQUEST_URI']."?page=".$activePage;
             break;
         case 'addPassenger':
             include('pages/addPassenger.php');
+            break;
+        case 'checkin':
+            include('pages/checkin.php');
             break;
         case 'login':
             include('pages/login.php');
