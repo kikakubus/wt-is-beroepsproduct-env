@@ -5,23 +5,26 @@ include_once 'logic/addPassenger.php';
 <div class="form-container">
     <h2>Add Passenger to Flight</h2>
     <form action="" method="POST">
+    
+        <label for="passenger">Passenger number:</label>
+        <input class="mms-input" type="number" id="passenger" name="passenger" value="<?=$passenger?>" required>
+    
         <label for="name">Name:</label>
-        <input class="mms-input" type="text" id="name" name="name" required>
+        <input class="mms-input" type="text" id="name" name="name" value="<?=$name?>" required>
         
         <label for="age">Sex:</label>
         <select class="mms-input" id="sex" name="sex" required>
-        	<option>Male</option>
-        	<option>Female</option>
+        	<option <?=$male?> value="M">Male</option>
+        	<option <?=$female?> value="V">Female</option>
+        	<option <?=$other?> value="x">Other</option>
         </select>
         
-        <label for="passenger">Passenger number:</label>
-        <input class="mms-input" type="number" id="passenger" name="passenger" required>
-        
         <label for="seat">Seat:</label>
-        <input class="mms-input" type="text" id="seat" name="seat" required>
+        <input class="mms-input" type="text" id="seat" name="seat" value="<?=$seat?>" required>
         
         <input type="hidden" name="flightID" value="<?=$_GET['flight']?>">
+        <input type="hidden" name="oldPassenger" value="<?=$oldPassenger?>">
         
-        <button class="submit-button" type="submit">Add Passenger</button>
+        <button class="submit-button" type="submit">Save</button>
     </form>
 </div>

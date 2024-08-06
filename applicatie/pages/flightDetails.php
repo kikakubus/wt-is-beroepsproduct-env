@@ -13,6 +13,9 @@ if (isset($_GET['id'])) {
     $flight = fGetBaseObject('Vlucht', 'vluchtnummer', $_GET['id']);
     $luchthaven = fGetBaseObject('Luchthaven', 'luchthavencode', $flight["bestemming"]);
     
+    //maxPassengers
+    $countPassengers = fGetCount('Passagier', 'vluchtnummer', $_GET['id'], 'passagiernummer');
+    
     // Fetch passengers for the flight
     $passengerSql = "SELECT * FROM Passagier WHERE 
                      (
@@ -57,7 +60,11 @@ else
                 <th>Name</th>
                 <th>Sex</th>
                 <th>Seat Number</th>
-                <th><a href="index.php?page=addPassenger&flight=<?=$flight['vluchtnummer']?>"><?=ADDBUTTON?></a></th>
+                <th>
+                	<?php if ($countPassengers < $flight['max_aantal']) { ?>
+                	    <a href="index.php?page=addPassenger&flight=<?=$flight['vluchtnummer']?>"><?=ADDBUTTON?></a>
+                	<?php } ?> 	
+                </th>
             </tr>
         </thead>
         <tbody>
