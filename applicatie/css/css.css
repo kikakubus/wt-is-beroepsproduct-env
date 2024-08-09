@@ -40,7 +40,6 @@ header {
   	flex-direction: row;
   	background-color: #333;
   	padding: 10px;
-  	
 }
 
 /* Style the links inside the navigation bar */
@@ -73,6 +72,17 @@ header {
   	display: flex;
   	flex-wrap: wrap;
   	flex-direction: row-reverse;
+    justify-content: right;
+}
+
+.justifyRight {
+    justify-content: right; 
+    margin-left: auto;
+}
+
+.justifyLeft {
+    justify-content: right; 
+    margin-right: auto;
 }
 
 /* login */

@@ -7,8 +7,6 @@ session_start();
 
 $nummer = $_GET['number'];
 
-$_SESSION['success'] = 'Passenger deleted successfully';
-
 try {
     // Insert passenger data into the database
     $sql = "DELETE FROM Passagier WHERE passagiernummer = :number";
@@ -24,7 +22,7 @@ try {
     $_SESSION['error'] = 'Error deleting passenger';
 }
 
-header('Location: '.$_SESSION['url']);
+header('Location: '.$_SERVER['HTTP_REFERER']);
 
 die();
 ?>

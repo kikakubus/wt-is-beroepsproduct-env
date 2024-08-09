@@ -1,19 +1,32 @@
-<?php 
+<?php
 $search_term = "";
 if (isset($_POST['search']))
 {
     $search_term = $_POST['search'];
 }
 
+$sortBy = "vertrektijd";
+$sortDate = "selected";
+$sortDestination = "";
+if (isset($_POST['search']))
+{
+    $sortBy = $_POST['sort'];
+    if ($sortBy == "naam") {
+        $sortDate = "";
+        $sortDestination = "selected";
+    }
+}
+
 // Fetch flight information with prepared statement
 $sql = "SELECT * FROM Vlucht 
+        INNER JOIN Luchthaven ON Vlucht.bestemming = Luchthaven.luchthavencode
         WHERE (
         vluchtnummer LIKE :nummer 
         OR bestemming LIKE :bestemming
-        OR bestemming IN (SELECT luchthavencode FROM Luchthaven WHERE naam LIKE :naam)
+        OR Luchthaven.naam LIKE :naam
         )
         AND vertrektijd >= GETDATE()
-        ORDER BY vertrektijd";
+        ORDER BY ".$sortBy."";
 
 $stmt = $conn->prepare($sql);
 $search_param = '%'.$search_term.'%';
@@ -28,8 +41,14 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h2>Flights</h2>
     
     <form method="POST" action="" class="search-form">
-        <input type="text" name="search" placeholder="Search flights..." value="<?= htmlspecialchars($search_term); ?>">
-        <button class="submit-button" type="submit">Search</button>
+        <p1>Sort by</p1>
+        <select class="mms-input" name="sort">
+            <option <?=$sortDate?> value="vertrektijd">Date</option>
+            <option <?=$sortDestination?> value="naam">Destination</option>
+        </select>
+        <p1>Search</p1>
+        <input type="text" name="search" placeholder="Search flights..." value="<?=htmlspecialchars($search_term);?>">
+        <button class="submit-button" type="submit">Search / Sort</button>
     </form>
     
     <table>
@@ -39,6 +58,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Destination</th>
                 <th>Gatecode</th>
                 <th>Departure time</th>
+                <th><a href="index.php?page=addFlight"><?=ADDBUTTON?></a></th>
             </tr>
         </thead>
         <tbody>
@@ -55,6 +75,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     $text .= "<td>".$row["bestemming"]." - ".$luchthaven['naam']."</td>";
                     $text .= "<td>".$row["gatecode"]."</td>";
                     $text .= "<td>".date_format($date, "Y-m-d h:i:s")."</td>";
+                    $text .= "<td>&nbsp;</td>";
                     $text .= "</tr>";
                 }
             } else {

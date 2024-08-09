@@ -1,6 +1,11 @@
 <?php 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
+    require_once '../database/conn.php';
+    $conn = makeConnection();
+
+    session_start();
+
     $passenger = $_POST['passenger'];
     $flight = $_POST['flight'];
     $date = date("Y-m-d H:i:s");
@@ -28,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 vluchtnummer = :vluchtnummer";
             
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':date', date("Y-m-d H:i:s"));
+            $stmt->bindParam(':date', $date);
             $stmt->bindParam(':passagiernummer', $passenger);
             $stmt->bindParam(':vluchtnummer', $flight);
             $stmt->execute();
@@ -41,6 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = "Checkin-in failed";
     }
 
-    header('Location: '.$_SERVER['REQUEST_URI']);
+    header('Location: '.$_SERVER['HTTP_REFERER']);
 }
 ?>

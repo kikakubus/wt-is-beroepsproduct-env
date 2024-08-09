@@ -12,7 +12,8 @@ if (isset($_GET['id'])) {
     // Fetch flight details
     $flight = fGetBaseObject('Vlucht', 'vluchtnummer', $_GET['id']);
     $luchthaven = fGetBaseObject('Luchthaven', 'luchthavencode', $flight["bestemming"]);
-    
+    $flightInfo = fShowFlightInfo($_GET['id']);
+
     //maxPassengers
     $countPassengers = fGetCount('Passagier', 'vluchtnummer', $_GET['id'], 'passagiernummer');
     
@@ -39,15 +40,10 @@ else
 }
 ?>
 <div class="mms-center">
-	<div class="form-container">
-    	<h2>Flight Details</h2>
-    	<?php if ($flight): ?>
-        <p><strong>Flight Number:</strong> <?=$flight['vluchtnummer']?></p>
-        <p><strong>Destination:</strong> <?=$flight['bestemming']?> - <?=$luchthaven['naam']?></p>
-        <p><strong>Gatecode:</strong> <?=$flight['gatecode']?></p>
-        <p><strong>Departure Time:</strong> <?=$flight['vertrektijd']?></p>
-    </div>
-        
+
+    <?=$flightInfo?>
+
+    <?php if (isset($_SESSION['loggedIn'])) { ?>
     <h3>Passengers List</h3>
     <form method="POST" action="" class="search-form">
     	<input type="text" name="search" placeholder="Search passengers" value="<?=$search_term?>">
@@ -68,10 +64,10 @@ else
             </tr>
         </thead>
         <tbody>
-            <?php if ($passengers): ?>
-                <?php foreach ($passengers as $passenger): ?>
+            <?php if ($passengers) { ?>
+                <?php foreach ($passengers as $passenger) { ?>
                     <tr>
-                        <td><?=$passenger['passagiernummer']?></td>
+                        <td><a href="index.php?page=passengerDetails&id=<?=$passenger['passagiernummer']?>"><?=$passenger['passagiernummer']?></a></td>
                         <td><?=$passenger['naam']?></td>
                         <td><?=$passenger['geslacht']?></td>
                         <td><?=$passenger['stoel']?></td>
@@ -80,15 +76,14 @@ else
                         	<a type="submit" href="logic/deletePassenger.php?&number=<?=$passenger['passagiernummer']?>"><?=DELETEBUTTON?></a>
                         </td>
                     </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+                <?php } ?>
+            <?php } else { ?>
                 <tr>
                     <td colspan="4">No passengers found.</td>
                 </tr>
-            <?php endif; ?>
+            <?php } ?>
         </tbody>
     </table>
-    <?php else: ?>
-        <p>Flight not found.</p>
-    <?php endif; ?>
+    <?php } ?>
+    
 </div>
