@@ -8,7 +8,7 @@ require_once 'logic/defines.php';
 $conn = makeConnection();
 
 if (!isset($_GET['page'])) {
-    $_GET['page'] = "home";
+    $_GET['page'] = "checkin";
 }
 
 
@@ -33,10 +33,9 @@ $currentUrl = $_SERVER['REQUEST_URI'];
         <!-- Navbar -->
         <nav class="topnav mms-round">
 
-            <a <?php if ($_GET['page'] == 'home') echo 'class="active"'; ?> href="index.php?page=home">Home</a>
+            <a <?php if ($_GET['page'] == 'checkin') echo 'class="active"'; ?> href="index.php?page=checkin">Check-in</a>
             <a <?php if ($_GET['page'] == 'myFlight') echo 'class="active "'; ?> href="index.php?page=myFlight">My flight</a>
             <a <?php if ($_GET['page'] == 'flights') echo 'class="active"'; ?> href="index.php?page=flights">Flights</a>
-            <a <?php if ($_GET['page'] == 'checkin') echo 'class="active"'; ?> href="index.php?page=checkin">Check-in</a>
             <a <?php if ($_GET['page'] == 'privacy') echo 'class="active "'; ?> href="index.php?page=privacy">Privacy statement</a>
 
             <?php if (isset($_SESSION['loggedIn'])) { ?>
@@ -85,7 +84,7 @@ $currentUrl = $_SERVER['REQUEST_URI'];
                     include('pages/privacy.php');
                     break;
                 default:
-                    include('pages/home.php');
+                    include('pages/checkin.php');
                     break;
             }
             ?>

@@ -35,6 +35,11 @@ $stmt->bindParam(':bestemming', $search_param);
 $stmt->bindParam(':naam', $search_param);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$addFlightButton = "&nbsp;";
+if(isset($_SESSION['loggedIn'])) {
+    $addFlightButton = "<a href='index.php?page=addFlight'>".ADDBUTTON."</a>";
+}
 ?>
 
 <div class="mms-center">
@@ -58,7 +63,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Destination</th>
                 <th>Gatecode</th>
                 <th>Departure time</th>
-                <th><a href="index.php?page=addFlight"><?=ADDBUTTON?></a></th>
+                <th><?=$addFlightButton?></th>
             </tr>
         </thead>
         <tbody>

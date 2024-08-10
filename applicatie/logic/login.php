@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['success'] = "Successfully logged in as counter ".$counterNumber;
         header('Location: index.php');
     } else {
-        $_SESSION['loggedIn'] = false;
         $_SESSION['error'] = "Counter number or password incorrect";
         header('Location: '.$_SERVER['REQUEST_URI']);
     }
