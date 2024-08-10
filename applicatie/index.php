@@ -53,9 +53,6 @@ $currentUrl = $_SERVER['REQUEST_URI'];
             
             // Include the active page content dynamically
             switch ($activePage) {
-                case 'home':
-                    include('pages/home.php');
-                    break;
                 case 'flights':
                     include('pages/flightOverview.php');
                     break;
