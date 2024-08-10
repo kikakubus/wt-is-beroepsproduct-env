@@ -8,7 +8,7 @@ require_once 'logic/defines.php';
 $conn = makeConnection();
 
 if (!isset($_GET['page'])) {
-    $_GET['page'] = "checkin";
+    $_GET['page'] = "home";
 }
 
 
@@ -25,7 +25,7 @@ $currentUrl = $_SERVER['REQUEST_URI'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testing</title>
+    <title>Gelre Airport</title>
     <link rel="stylesheet" type="text/css" href="css/css.css">
 </head>
     <body>
@@ -33,6 +33,7 @@ $currentUrl = $_SERVER['REQUEST_URI'];
         <!-- Navbar -->
         <nav class="topnav mms-round">
 
+            <a <?php if ($_GET['page'] == 'home') echo 'class="active"'; ?> href="index.php?page=home">Home</a>
             <a <?php if ($_GET['page'] == 'checkin') echo 'class="active"'; ?> href="index.php?page=checkin">Check-in</a>
             <a <?php if ($_GET['page'] == 'myFlight') echo 'class="active "'; ?> href="index.php?page=myFlight">My flight</a>
             <a <?php if ($_GET['page'] == 'flights') echo 'class="active"'; ?> href="index.php?page=flights">Flights</a>
@@ -53,6 +54,9 @@ $currentUrl = $_SERVER['REQUEST_URI'];
             
             // Include the active page content dynamically
             switch ($activePage) {
+                case 'home':
+                    include('pages/home.php');
+                    break;
                 case 'flights':
                     include('pages/flightOverview.php');
                     break;
