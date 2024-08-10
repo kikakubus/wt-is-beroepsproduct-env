@@ -6,6 +6,9 @@ include_once 'logic/addPassenger.php';
     <h2>Add Passenger to Flight</h2>
     <form action="" method="POST">
     
+        <label for="flightID">Flight number:</label>
+        <input class="mms-input" type="number" id="flightID" name="flightID" value="<?=$_GET['flight']?>" required>
+
         <label for="passenger">Passenger number:</label>
         <input class="mms-input" type="number" id="passenger" name="passenger" value="<?=$passenger?>" required>
     
@@ -22,7 +25,7 @@ include_once 'logic/addPassenger.php';
         <label for="seat">Seat:</label>
         <input class="mms-input" type="text" id="seat" name="seat" value="<?=$seat?>" required>
         
-        <input type="hidden" name="flightID" value="<?=$_GET['flight']?>">
+        <input type="hidden" name="oldFlightID" value="<?=$_GET['flight']?>">
         <input type="hidden" name="oldPassenger" value="<?=$oldPassenger?>">
         
         <button class="submit-button" type="submit">Save</button>

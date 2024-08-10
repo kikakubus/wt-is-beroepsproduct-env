@@ -8,6 +8,7 @@
         <li>Check-in their baggage</li>
         <li>View their flight information</li>
         <li>View upcoming flights</li>
+        <li>read through the privacy statement</li>
     </ul>
     <p1>For workers please login here: </p1>
     <a type="button" class="mms-button" href="index.php?page=login">Log in</a>

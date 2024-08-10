@@ -34,6 +34,7 @@ if (isset($_GET['id']))
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $flightID = $_POST['flightID'];
+    $oldFlightID = $_POST['oldFlightID'];
     $name = $_POST['name'];
     $passenger = $_POST['passenger'];
     $oldPassenger = $_POST['oldPassenger'];
@@ -54,22 +55,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'wachtwoord' => $pass
     );
     
-    if ($oldPassenger != "") {
-        if (fInsertObject('Passagier', $data, 'passagiernummer', $oldPassenger)) {
-            $_SESSION['success'] = 'Passenger updated successfully';
-            header('Location: ../index.php?page=flightDetails&id='.$_POST['flightID'].'');
+    $now = date("Y-m-d H:i:s");
+    $flightExists = fGetCount('Vlucht', 'vluchtnummer', $flightID, 'vluchtnummer', " AND vertrektijd > '".$now."'");
+
+    if ($flightExists > 0) {
+        if ($oldPassenger != "") {
+            if (fInsertObject('Passagier', $data, 'passagiernummer', $oldPassenger)) {
+                $_SESSION['success'] = 'Passenger updated successfully';
+                header('Location: ../index.php?page=flightDetails&id='.$_POST['oldFlightID'].'');
+            } else {
+                $_SESSION['error'] = 'Error updating passenger';
+                header('Location: '.$_SERVER['REQUEST_URI']);
+            }
+        } elseif (fInsertObject('Passagier', $data)) {
+            $_SESSION['success'] = 'Passenger added successfully';
+            header('Location: ../index.php?page=flightDetails&id='.$_POST['oldFlightID'].'');
         } else {
-            $_SESSION['error'] = 'Error updating passenger';
+            $_SESSION['error'] = 'Error adding passenger';
             header('Location: '.$_SERVER['REQUEST_URI']);
         }
-    } elseif (fInsertObject('Passagier', $data)) {
-        $_SESSION['success'] = 'Passenger added successfully';
-        header('Location: ../index.php?page=flightDetails&id='.$_POST['flightID'].'');
     } else {
-        $_SESSION['error'] = 'Error adding passenger';
+        $_SESSION['error'] = 'Flight doesnt exist or has already departed';
         header('Location: '.$_SERVER['REQUEST_URI']);
     }
-    
     die();
 }
 ?>
